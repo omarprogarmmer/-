@@ -1,0 +1,22 @@
+/* lessons.css */
+.lesson-card {
+  background-color: #e0f7fa;
+  border: 1px solid #b2ebf2;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+.lesson-card:hover {
+  transform: scale(1.02);
+}
+.lesson-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.lesson-description {
+  font-size: 1rem;
+  color: #333;
+}

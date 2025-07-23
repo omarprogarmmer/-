@@ -1,130 +1,130 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>الصفحة الرئيسية</title>
-<style>
-  :root {
-    --light-gray: #f2f2f2;
-    --soft-green: #a8dadc;
-    --moderate-blue: #457b9d;
-    --dark-text: #1d3557;
-  }
-  body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
-    background-color: var(--light-gray);
-    margin: 0; padding: 0;
-    color: var(--dark-text);
-  }
-  header {
-    background-color: var(--soft-green);
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
-    position: fixed;
-    top: 0; width: 100%;
-    height: 28px;
-    z-index: 1;
-  }
-  .settings-button {
-    position: absolute;
-    right: 1rem; top: 1rem;
-    background-color: var(--moderate-blue);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px; height: 40px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-  }
-  .settings-button:hover {
-    background-color: #1d3557;
-  }
-  nav {
-    background-color: var(--moderate-blue);
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 0.5rem;
-    position: fixed;
-    top: 60px;
-    width: 100%;
-    z-index: 999;
-  }
-  nav a, nav button.more-btn {
-    color: white;
-    margin: 0.5rem;
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background-color 0.3s ease;
-  }
-  nav a:hover, nav button.more-btn:hover {
-    background-color: #1d3557;
-  }
-  .dropdown {
-    position: absolute;
-    top: 42px; right: 0.5rem;
-    background-color: var(--moderate-blue);
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    display: none;
-    flex-direction: column;
-    min-width: 150px;
-    z-index: 1000;
-  }
-  .dropdown a {
-    padding: 0.5rem 1rem;
-    margin: 0;
-    color: white;
-    text-decoration: none;
-    border-radius: 0;
-  }
-  .dropdown a:hover {
-    background-color: #1d3557;
-  }
-  .dropdown.show {
-    display: flex;
-  }
-  main {
-    padding: 2rem 1.5rem;
-    font-size: 1rem;
-    line-height: 1.6;
-    background-color: white;
-    margin: 1rem auto;
-    margin-top: 140px;
-    max-width: 900px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    min-height: 300px;
-  }
-  footer {
-    background-color: var(--soft-green);
-    color: var(--dark-text);
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    margin-top: 2rem;
-  }
-  @media (max-width: 600px) {
-    header { font-size: 1.2rem; height: 60px; }
-    nav a, nav button.more-btn { font-size: 1rem; }
-    main { font-size: 0.95rem; margin: 0.5rem; margin-top: 140px; padding: 1rem; }
-    .settings-button { width: 36px; height: 36px; font-size: 1rem; right: 0.5rem; top: 0.8rem; }
-    .dropdown { right: 0.5rem; top: 36px; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الصفحة الرئيسية</title>
+  <style>
+    :root {
+      --light-gray: #f2f2f2;
+      --soft-green: #a8dadc;
+      --moderate-blue: #457b9d;
+      --dark-text: #1d3557;
+    }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      direction: rtl;
+      background-color: var(--light-gray);
+      margin: 0; padding: 0;
+      color: var(--dark-text);
+    }
+    header {
+      background-color: var(--soft-green);
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      position: fixed;
+      top: 0; width: 100%;
+      height: 28px;
+      z-index: 1;
+    }
+    .settings-button {
+      position: absolute;
+      right: 1rem; top: 1rem;
+      background-color: var(--moderate-blue);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    .settings-button:hover {
+      background-color: #1d3557;
+    }
+    nav {
+      background-color: var(--moderate-blue);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0.5rem;
+      position: fixed;
+      top: 60px;
+      width: 100%;
+      z-index: 999;
+    }
+    nav a, nav button.more-btn {
+      color: white;
+      margin: 0.5rem;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover, nav button.more-btn:hover {
+      background-color: #1d3557;
+    }
+    .dropdown {
+      position: absolute;
+      top: 42px; right: 0.5rem;
+      background-color: var(--moderate-blue);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      min-width: 150px;
+      z-index: 1000;
+    }
+    .dropdown a {
+      padding: 0.5rem 1rem;
+      margin: 0;
+      color: white;
+      text-decoration: none;
+      border-radius: 0;
+    }
+    .dropdown a:hover {
+      background-color: #1d3557;
+    }
+    .dropdown.show {
+      display: flex;
+    }
+    main {
+      padding: 2rem 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      background-color: white;
+      margin: 1rem auto;
+      margin-top: 140px;
+      max-width: 900px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      min-height: 300px;
+    }
+    footer {
+      background-color: var(--soft-green);
+      color: var(--dark-text);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 600px) {
+      header { font-size: 1.2rem; height: 60px; }
+      nav a, nav button.more-btn { font-size: 1rem; }
+      main { font-size: 0.95rem; margin: 0.5rem; margin-top: 140px; padding: 1rem; }
+      .settings-button { width: 36px; height: 36px; font-size: 1rem; right: 0.5rem; top: 0.8rem; }
+      .dropdown { right: 0.5rem; top: 36px; }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -146,78 +146,87 @@
     <h2 id="motivation"></h2>
   </main>
 
-  <footer>
-  </footer>
+  <footer></footer>
 
-<script>
-  // عبارات تشجيعية عشوائية
-  const phrases = [
-    "ثق بنفسك، فأنت قادر على النجاح!",
-    "كل يوم هو فرصة جديدة لتتقدم.",
-    "تذكّر: التعب مؤقت، والنجاح دائم.",
-    "أنت أقوى مما تعتقد.",
-    "ركّز على هدفك، ولا تستسلم!",
-    "العلم نور، والجد والاجتهاد طريقك إليه.",
-    "ابدأ بخطوة صغيرة، وستصل بعيدًا.",
-    "كل لحظة دراسة تقربك من حلمك."
-  ];
+  <script>
+    const phrases = [
+      "ثق بنفسك، فأنت قادر على النجاح!",
+      "كل يوم هو فرصة جديدة لتتقدم.",
+      "تذكّر: التعب مؤقت، والنجاح دائم.",
+      "أنت أقوى مما تعتقد.",
+      "ركّز على هدفك، ولا تستسلم!",
+      "العلم نور، والجد والاجتهاد طريقك إليه.",
+      "ابدأ بخطوة صغيرة، وستصل بعيدًا.",
+      "كل لحظة دراسة تقربك من حلمك."
+    ];
 
-  // محتوى الصفحات
-  const content = {
-    lessons: `
-      <h2>📚 الدروس</h2>
-      <p>هذه قائمة الدروس التي يمكنك دراستها اليوم.</p>
-      <ul>
-        <li>الدرس الأول: مقدمة</li>
-        <li>الدرس الثاني: التقدم</li>
-        <li>الدرس الثالث: التقييم</li>
-      </ul>
-    `,
-    notes: `
-      <h2>📝 الملاحظات</h2>
-      <p>قم بكتابة ملاحظاتك هنا لتبقى منظماً.</p>
-    `,
-    page1: `<h2>📄 الصفحة 1</h2><p>هذا محتوى الصفحة الأولى.</p>`,
-    page2: `<h2>📄 الصفحة 2</h2><p>هذا محتوى الصفحة الثانية.</p>`,
-    page3: `<h2>📄 الصفحة 3</h2><p>هذا محتوى الصفحة الثالثة.</p>`
-  };
+    const mainContent = document.getElementById('main-content');
+    const motivation = document.getElementById("motivation");
 
-  const mainContent = document.getElementById('main-content');
-  const motivation = document.getElementById("motivation");
-
-  // تحميل الصفحة المحفوظة من التخزين المحلي، أو عرض عبارة تحفيزية عشوائية
-  const savedPage = localStorage.getItem('currentPage');
-  if (savedPage && content[savedPage]) {
-    mainContent.innerHTML = content[savedPage];
-  } else {
-    motivation.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-  }
-
-  // القائمة المنسدلة
-  const moreBtn = document.getElementById("moreBtn");
-  const dropdownMenu = document.getElementById("dropdownMenu");
-
-  moreBtn.addEventListener("click", () => {
-    dropdownMenu.classList.toggle("show");
-    moreBtn.textContent = dropdownMenu.classList.contains("show") ? "أقل ▲" : "أكثر ▼";
-  });
-
-  window.addEventListener("click", e => {
-    if (!moreBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-      dropdownMenu.classList.remove("show");
-      moreBtn.textContent = "أكثر ▼";
+    function loadHTML(url) {
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('خطأ في تحميل المحتوى');
+          return response.text();
+        })
+        .then(html => {
+          mainContent.innerHTML = html;
+        })
+        .catch(err => {
+          mainContent.innerHTML = `<p>لم نستطع تحميل المحتوى. حاول لاحقاً.</p>`;
+          console.error(err);
+        });
     }
-  });
 
-  // تغيير المحتوى داخل main وحفظ الصفحة في localStorage
-  document.querySelectorAll('nav a[data-page]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const page = link.getAttribute('data-page');
-      mainContent.innerHTML = content[page];
+    function loadPage(page) {
       localStorage.setItem('currentPage', page);
+
+      if (page === "lessons") {
+        loadHTML('lessons.html');
+      } else if (page === "notes") {
+        loadHTML('notes.html');
+      } else if (page === "page1") {
+        loadHTML('page1.html');
+      } else if (page === "page2") {
+        loadHTML('page2.html');
+      } else if (page === "page3") {
+        loadHTML('page3.html');
+      } else {
+        motivation.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+        mainContent.innerHTML = "";
+      }
+    }
+
+    // عند تحميل الصفحة نتحقق إذا في صفحة محفوظة
+    const savedPage = localStorage.getItem('currentPage');
+    if (savedPage) {
+      loadPage(savedPage);
+    } else {
+      motivation.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+    }
+
+    const moreBtn = document.getElementById("moreBtn");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    moreBtn.addEventListener("click", () => {
+      dropdownMenu.classList.toggle("show");
+      moreBtn.textContent = dropdownMenu.classList.contains("show") ? "أقل ▲" : "أكثر ▼";
     });
-  });
-</script>
+
+    window.addEventListener("click", e => {
+      if (!moreBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove("show");
+        moreBtn.textContent = "أكثر ▼";
+      }
+    });
+
+    document.querySelectorAll('nav a[data-page]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const page = link.getAttribute('data-page');
+        loadPage(page);
+      });
+    });
+  </script>
 </body>
 </html>
