@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -171,6 +171,21 @@
         })
         .then(html => {
           mainContent.innerHTML = html;
+
+          // تنفيذ السكريبتات داخل الصفحة المحمّلة
+          const tempDiv = document.createElement("div");
+          tempDiv.innerHTML = html;
+          const scripts = tempDiv.querySelectorAll("script");
+          scripts.forEach(oldScript => {
+            const newScript = document.createElement("script");
+            if (oldScript.src) {
+              newScript.src = oldScript.src;
+              newScript.async = false;
+            } else {
+              newScript.textContent = oldScript.textContent;
+            }
+            document.body.appendChild(newScript);
+          });
         })
         .catch(err => {
           mainContent.innerHTML = `<p>لم نستطع تحميل المحتوى. حاول لاحقاً.</p>`;
@@ -181,16 +196,16 @@
     function loadPage(page) {
       localStorage.setItem('currentPage', page);
 
-      if (page === "lessons") {
-        loadHTML('lessons.html');
-      } else if (page === "notes") {
-        loadHTML('notes.html');
-      } else if (page === "page1") {
-        loadHTML('page1.html');
-      } else if (page === "page2") {
-        loadHTML('page2.html');
-      } else if (page === "page3") {
-        loadHTML('page3.html');
+      const pages = {
+        lessons: 'lessons.html',
+        notes: 'notes.html',
+        page1: 'page1.html',
+        page2: 'page2.html',
+        page3: 'page3.html'
+      };
+
+      if (pages[page]) {
+        loadHTML(pages[page]);
       } else {
         motivation.textContent = phrases[Math.floor(Math.random() * phrases.length)];
         mainContent.innerHTML = "";
