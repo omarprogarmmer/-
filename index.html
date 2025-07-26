@@ -1,247 +1,239 @@
 <!DOCTYPE html>
-<html lang="ar" >
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>الصفحة الرئيسية</title>
+  <title>الأقسام - المكتبة</title>
   <style>
-    :root {
-      --light-gray: #f2f2f2;
-      --soft-green: #a8dadc;
-      --moderate-blue: #457b9d;
-      --dark-text: #1d3557;
-    }
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       direction: rtl;
-      background-color: var(--light-gray);
-      margin: 0; padding: 0;
-      color: var(--dark-text);
-    }
-    header {
-      background-color: var(--soft-green);
-      padding: 1rem;
+      padding: 1.5rem 1rem;
+      background-color: #f0f4f8;
+      max-width: 600px;
+      margin: auto;
+      box-sizing: border-box;
       text-align: center;
-      font-size: 1.5rem;
-      position: fixed;
-      top: 0; width: 100%;
-      height: 28px;
-      z-index: 1;
     }
-    .settings-button {
-      position: absolute;
-      right: 1rem; top: 1rem;
-      background-color: var(--moderate-blue);
+    h1 {
+      color: #2a9d8f;
+      font-size: 2rem;
+      margin-bottom: 1.8rem;
+      word-break: break-word;
+    }
+    #addSectionBtn {
+      background-color: #2a9d8f;
       color: white;
       border: none;
-      border-radius: 50%;
-      width: 40px; height: 40px;
-      font-size: 1.2rem;
+      padding: 14px 30px;
+      border-radius: 12px;
       cursor: pointer;
+      font-size: 1.2rem;
+      width: 90%;
+      max-width: 320px;
+      margin-bottom: 25px;
+      transition: background-color 0.3s ease;
+    }
+    #addSectionBtn:hover {
+      background-color: #1d5e6b;
+    }
+    #sectionsList {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 40px;
+    }
+    .section-item {
+      background-color: #fff;
+      padding: 16px 20px;
+      border-radius: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s ease;
-    }
-    .settings-button:hover {
-      background-color: #1d3557;
-    }
-    nav {
-      background-color: var(--moderate-blue);
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 0.5rem;
-      position: fixed;
-      top: 60px;
-      width: 100%;
-      z-index: 999;
-    }
-    nav a, nav button.more-btn {
-      color: white;
-      margin: 0.5rem;
-      text-decoration: none;
-      font-size: 1.1rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 5px;
-      background: none;
-      border: none;
+      justify-content: space-between;
       cursor: pointer;
-      font-family: inherit;
-      transition: background-color 0.3s ease;
+      transition: box-shadow 0.3s ease;
+      user-select: none;
     }
-    nav a:hover, nav button.more-btn:hover {
-      background-color: #1d3557;
+    .section-item:hover {
+      box-shadow: 0 6px 18px rgba(0,0,0,0.22);
     }
-    .dropdown {
-      position: absolute;
-      top: 42px; right: 0.5rem;
-      background-color: var(--moderate-blue);
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      display: none;
-      flex-direction: column;
-      min-width: 150px;
-      z-index: 1000;
+    .section-name {
+      font-size: 1.2rem;
+      color: #264653;
+      flex-grow: 1;
+      word-break: break-word;
+      text-align: right;
+      padding-right: 12px;
     }
-    .dropdown a {
-      padding: 0.5rem 1rem;
-      margin: 0;
-      color: white;
-      text-decoration: none;
-      border-radius: 0;
-    }
-    .dropdown a:hover {
-      background-color: #1d3557;
-    }
-    .dropdown.show {
+    .btn-group {
       display: flex;
+      gap: 10px;
+      flex-shrink: 0;
     }
-    main {
-      padding: 2rem 1.5rem;
-      font-size: 1rem;
-      line-height: 1.6;
-      background-color: white;
-      margin: 1rem auto;
-      margin-top: 140px;
-      max-width: 900px;
+    .btn-edit, .btn-delete {
+      background-color: #2a9d8f;
+      color: white;
+      border: none;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      min-height: 300px;
+      padding: 8px 14px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      flex-shrink: 0;
     }
-    footer {
-      background-color: var(--soft-green);
-      color: var(--dark-text);
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      margin-top: 2rem;
+    .btn-delete {
+      background-color: #e76f51;
     }
-    @media (max-width: 600px) {
-      header { font-size: 1.2rem; height: 60px; }
-      nav a, nav button.more-btn { font-size: 1rem; }
-      main { font-size: 0.95rem; margin: 0.5rem; margin-top: 140px; padding: 1rem; }
-      .settings-button { width: 36px; height: 36px; font-size: 1rem; right: 0.5rem; top: 0.8rem; }
-      .dropdown { right: 0.5rem; top: 36px; }
+    .btn-edit:hover {
+      background-color: #1b5f73;
+    }
+    .btn-delete:hover {
+      background-color: #b54334;
+    }
+    @media (max-width: 400px) {
+      #addSectionBtn {
+        width: 100%;
+        max-width: none;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+      }
+      .section-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .btn-group {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .btn-edit, .btn-delete {
+        width: 48%;
+        font-size: 1.1rem;
+        padding: 10px 0;
+      }
+      .section-name {
+        padding-right: 0;
+        text-align: right;
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <button class="settings-button" title="الإعدادات">⚙️</button>
-  </header>
 
-  <nav>
-    <a href="#lessons" data-page="lessons">الدروس</a>
-    <a href="#notes" data-page="notes">الملاحظات</a>
-    <button class="more-btn" id="moreBtn">أكثر ▼</button>
-    <div class="dropdown" id="dropdownMenu">
-      <a href="#page1" data-page="page1">الصفحة 1</a>
-      <a href="#page2" data-page="page2">الصفحة 2</a>
-      <a href="#page3" data-page="page3">الصفحة 3</a>
-    </div>
-  </nav>
+  <h1>📚 مكتبة الدروس</h1>
 
-  <main id="main-content">
-    <h2 id="motivation"></h2>
-  </main>
+  <button id="addSectionBtn">➕ إضافة قسم جديد</button>
 
-  <footer></footer>
+  <div id="sectionsList">
+    <!-- تظهر الأقسام هنا -->
+  </div>
 
   <script>
-    const phrases = [
-      "ثق بنفسك، فأنت قادر على النجاح!",
-      "كل يوم هو فرصة جديدة لتتقدم.",
-      "تذكّر: التعب مؤقت، والنجاح دائم.",
-      "أنت أقوى مما تعتقد.",
-      "ركّز على هدفك، ولا تستسلم!",
-      "العلم نور، والجد والاجتهاد طريقك إليه.",
-      "ابدأ بخطوة صغيرة، وستصل بعيدًا.",
-      "كل لحظة دراسة تقربك من حلمك."
-    ];
+    const sectionsList = document.getElementById('sectionsList');
+    const addSectionBtn = document.getElementById('addSectionBtn');
 
-    const mainContent = document.getElementById('main-content');
-    const motivation = document.getElementById("motivation");
+    let sections = JSON.parse(localStorage.getItem('sections') || '[]');
 
-    function loadHTML(url) {
-      fetch(url)
-        .then(response => {
-          if (!response.ok) throw new Error('خطأ في تحميل المحتوى');
-          return response.text();
-        })
-        .then(html => {
-          mainContent.innerHTML = html;
+    function saveSections() {
+      localStorage.setItem('sections', JSON.stringify(sections));
+    }
 
-          // تنفيذ السكريبتات داخل الصفحة المحمّلة
-          const tempDiv = document.createElement("div");
-          tempDiv.innerHTML = html;
-          const scripts = tempDiv.querySelectorAll("script");
-          scripts.forEach(oldScript => {
-            const newScript = document.createElement("script");
-            if (oldScript.src) {
-              newScript.src = oldScript.src;
-              newScript.async = false;
-            } else {
-              newScript.textContent = oldScript.textContent;
+    function renderSections() {
+      sectionsList.innerHTML = '';
+
+      if (sections.length === 0) {
+        sectionsList.innerHTML = '<p style="color:#666; font-size:1.1rem;">لا توجد أقسام مضافة بعد.</p>';
+        return;
+      }
+
+      sections.forEach((section, index) => {
+        const item = document.createElement('div');
+        item.className = 'section-item';
+
+        // عند الضغط على اسم القسم ننتقل إلى صفحة القسم مع حفظ الاسم
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'section-name';
+        nameSpan.textContent = section;
+        nameSpan.onclick = () => {
+          localStorage.setItem('currentSection', section);
+          window.location.href = 'section.html';
+        };
+
+        // أزرار تعديل وحذف
+        const btnGroup = document.createElement('div');
+        btnGroup.className = 'btn-group';
+
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn-edit';
+        editBtn.textContent = '✏️ تعديل الاسم';
+        editBtn.title = 'تعديل اسم القسم';
+        editBtn.onclick = (e) => {
+          e.stopPropagation();
+          const newName = prompt('ادخل اسم القسم الجديد:', section);
+          if (newName !== null) {
+            const trimmed = newName.trim();
+            if (trimmed === '') {
+              alert('الاسم لا يمكن أن يكون فارغاً!');
+              return;
             }
-            document.body.appendChild(newScript);
-          });
-        })
-        .catch(err => {
-          mainContent.innerHTML = `<p>لم نستطع تحميل المحتوى. حاول لاحقاً.</p>`;
-          console.error(err);
-        });
-    }
+            if (sections.includes(trimmed)) {
+              alert('هذا الاسم موجود مسبقاً!');
+              return;
+            }
+            sections[index] = trimmed;
+            saveSections();
+            renderSections();
+          }
+        };
 
-    function loadPage(page) {
-      localStorage.setItem('currentPage', page);
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-delete';
+        delBtn.textContent = '🗑️ حذف القسم';
+        delBtn.title = 'حذف القسم';
+        delBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (confirm(`هل تريد حذف القسم "${section}"؟\n(سوف تحذف جميع الملفات المرتبطة به أيضاً)`)) {
+            sections.splice(index, 1);
+            saveSections();
+            // حذف ملفات القسم من localStorage
+            localStorage.removeItem(`files_${section}`);
+            renderSections();
+          }
+        };
 
-      const pages = {
-        lessons: 'lessons.html',
-        notes: 'notes.html',
-        page1: 'page1.html',
-        page2: 'page2.html',
-        page3: 'page3.html'
-      };
+        btnGroup.appendChild(editBtn);
+        btnGroup.appendChild(delBtn);
 
-      if (pages[page]) {
-        loadHTML(pages[page]);
-      } else {
-        motivation.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-        mainContent.innerHTML = "";
-      }
-    }
+        item.appendChild(nameSpan);
+        item.appendChild(btnGroup);
 
-    // عند تحميل الصفحة نتحقق إذا في صفحة محفوظة
-    const savedPage = localStorage.getItem('currentPage');
-    if (savedPage) {
-      loadPage(savedPage);
-    } else {
-      motivation.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-    }
-
-    const moreBtn = document.getElementById("moreBtn");
-    const dropdownMenu = document.getElementById("dropdownMenu");
-
-    moreBtn.addEventListener("click", () => {
-      dropdownMenu.classList.toggle("show");
-      moreBtn.textContent = dropdownMenu.classList.contains("show") ? "أقل ▲" : "أكثر ▼";
-    });
-
-    window.addEventListener("click", e => {
-      if (!moreBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-        dropdownMenu.classList.remove("show");
-        moreBtn.textContent = "أكثر ▼";
-      }
-    });
-
-    document.querySelectorAll('nav a[data-page]').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const page = link.getAttribute('data-page');
-        loadPage(page);
+        sectionsList.appendChild(item);
       });
-    });
+    }
+
+    addSectionBtn.onclick = () => {
+      let newSection = prompt('ادخل اسم القسم الجديد:');
+      if (newSection !== null) {
+        newSection = newSection.trim();
+        if (newSection === '') {
+          alert('الاسم لا يمكن أن يكون فارغاً!');
+          return;
+        }
+        if (sections.includes(newSection)) {
+          alert('هذا الاسم موجود مسبقاً!');
+          return;
+        }
+        sections.push(newSection);
+        saveSections();
+        renderSections();
+      }
+    };
+
+    renderSections();
   </script>
+
 </body>
 </html>
