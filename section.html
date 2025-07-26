@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>مكتبة ملفات - تخزين محلي بـ IndexedDB</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    direction: rtl;
+    max-width: 600px;
+    margin: auto;
+    padding: 1.5rem 1rem;
+    background: #f9f9f9;
+    text-align: center;
+  }
+  h2 {
+    color: #2a9d8f;
+  }
+  #fileInput {
+    display: none;
+  }
+  #addBtn {
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    width: 90%;
+    max-width: 320px;
+  }
+  #fileList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+  }
+  .file-box {
+    background: white;
+    padding: 12px;
+    border-radius: 14px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    width: 140px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .file-box img {
+    max-width: 100%;
+    max-height: 110px;
+    border-radius: 10px;
+    object-fit: contain;
+  }
+  .file-name {
+    margin-top: 10px;
+    font-size: 1rem;
+    word-break: break-word;
+    min-height: 2.4rem;
+    color: #333;
+  }
+  .btn-group {
+    margin-top: auto;
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-edit, .btn-delete {
+    flex: 1;
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  .btn-delete {
+    background-color: #e76f51;
+  }
+  @media (max-width: 400px) {
+    #addBtn {
+      width: 100%;
+      max-width: none;
+    }
+    .file-box {
+      width: 45vw;
+    }
+    .file-box img {
+      max-height: 90px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h2>مكتبة الملفات المحلية</h2>
+
+<button id="addBtn">➕ إضافة ملفات</button>
+<input type="file" id="fileInput" accept="image/*,.pdf" multiple />
+
+<div id="fileList"></div>
+
+<script>
+  // فتح قاعدة بيانات IndexedDB
+  let db;
+  const dbName = 'LocalLibraryDB';
+  const storeName = 'filesStore';
+
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(dbName, 1);
+      request.onerror = () => reject('فشل فتح قاعدة البيانات');
+      request.onsuccess = () => {
+        db = request.result;
+        resolve(db);
+      };
+      request.onupgradeneeded = (event) => {
+        db = event.target.result;
+        if (!db.objectStoreNames.contains(storeName)) {
+          db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
+        }
+      };
+    });
+  }
+
+  // إضافة ملف
+  function addFile(file) {
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, 'readwrite');
+      const store = transaction.objectStore(storeName);
+      const item = {
+        name: file.name,
+        type: file.type,
+        fileBlob: file
+      };
+      const request = store.add(item);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject('فشل إضافة الملف');
+    });
+  }
+
+  // جلب جميع الملفات
+  function getAllFiles() {
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, 'readonly');
+      const store = transaction.objectStore(storeName);
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject('فشل جلب الملفات');
+    });
+  }
+
+  // حذف ملف بالمعرف
+  function deleteFile(id) {
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(storeName, 'readwrite');
+      const store = transaction.objectStore(storeName);
+      const request = store.delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject('فشل حذف الملف');
+    });
+  }
+
+  // تحديث اسم الملف
+  function updateFileName(id, newName) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const transaction = db.transaction(storeName, 'readwrite');
+        const store = transaction.objectStore(storeName);
+        const fileRecord = await new Promise((res, rej) => {
+          const req = store.get(id);
+          req.onsuccess = () => res(req.result);
+          req.onerror = () => rej('فشل جلب الملف للتعديل');
+        });
+        if (!fileRecord) return reject('الملف غير موجود');
+
+        fileRecord.name = newName;
+        const updateReq = store.put(fileRecord);
+        updateReq.onsuccess = () => resolve();
+        updateReq.onerror = () => reject('فشل تحديث اسم الملف');
+      } catch(e) {
+        reject(e);
+      }
+    });
+  }
+
+  // عرض الملفات
+  async function renderFiles() {
+    const files = await getAllFiles();
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = '';
+
+    if (files.length === 0) {
+      fileList.innerHTML = '<p>لا توجد ملفات مضافة بعد.</p>';
+      return;
+    }
+
+    files.forEach(file => {
+      const box = document.createElement('div');
+      box.className = 'file-box';
+
+      const url = URL.createObjectURL(file.fileBlob);
+
+      box.onclick = () => {
+        window.open(url, '_blank', 'noopener');
+      };
+
+      if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = file.name;
+        img.title = file.name;
+        box.appendChild(img);
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'file-name';
+        nameDiv.textContent = file.name;
+        box.appendChild(nameDiv);
+
+      } else if (file.type === 'application/pdf') {
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'file-name';
+        nameDiv.textContent = `${file.name} (PDF)`;
+        box.appendChild(nameDiv);
+
+      } else {
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'file-name';
+        nameDiv.textContent = file.name;
+        box.appendChild(nameDiv);
+      }
+
+      const btnGroup = document.createElement('div');
+      btnGroup.className = 'btn-group';
+
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn-edit';
+      editBtn.textContent = '✏️ تعديل الاسم';
+      editBtn.onclick = async (event) => {
+        event.stopPropagation();
+        const newName = prompt('ادخل الاسم الجديد مع الامتداد:', file.name);
+        if (newName && newName.trim() !== '') {
+          try {
+            await updateFileName(file.id, newName.trim());
+            renderFiles();
+          } catch (err) {
+            alert(err);
+          }
+        }
+      };
+      btnGroup.appendChild(editBtn);
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn-delete';
+      delBtn.textContent = '🗑️ حذف الملف';
+      delBtn.onclick = async (event) => {
+        event.stopPropagation();
+        if (confirm(`هل تريد حذف الملف "${file.name}"؟`)) {
+          await deleteFile(file.id);
+          renderFiles();
+        }
+      };
+      btnGroup.appendChild(delBtn);
+
+      box.appendChild(btnGroup);
+      fileList.appendChild(box);
+    });
+  }
+
+  document.getElementById('addBtn').onclick = () => {
+    document.getElementById('fileInput').click();
+  };
+
+  document.getElementById('fileInput').addEventListener('change', async (event) => {
+    const inputFiles = Array.from(event.target.files);
+    for (const f of inputFiles) {
+      try {
+        await addFile(f);
+      } catch(e) {
+        alert(e);
+      }
+    }
+    event.target.value = '';
+    renderFiles();
+  });
+
+  // فتح قاعدة البيانات والبدء
+  openDB().then(() => {
+    renderFiles();
+  }).catch(err => {
+    alert(err);
+  });
+
+</script>
+
+</body>
+</html>

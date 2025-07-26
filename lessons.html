@@ -1,404 +1,239 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>مكتبة الدروس حسب الأقسام</title>
-<style>
-  :root {
-    --light-gray: #f2f2f2;
-    --soft-green: #a8dadc;
-    --moderate-blue: #457b9d;
-    --dark-text: #1d3557;
-    --accent-color: #2a9d8f;
-  }
-  body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
-    background-color: var(--light-gray);
-    margin: 0; 
-    padding: 1rem;
-    color: var(--dark-text);
-  }
-  h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-  #buttons-container, #section-content {
-    max-width: 700px;
-    margin: 0 auto 1.5rem auto;
-    background: white;
-    padding: 1.5rem 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    transition: box-shadow 0.3s ease;
-  }
-  #buttons-container:hover, #section-content:hover {
-    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
-  }
-  #buttons-container {
-    display: block;
-  }
-  .section-button {
-    display: block;
-    width: 100%;
-    background-color: var(--moderate-blue);
-    color: white;
-    padding: 1.3rem 1.5rem;
-    margin: 0.6rem 0;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.25rem;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    transition: background-color 0.4s ease, transform 0.2s ease;
-    box-shadow: 0 5px 15px rgba(69,123,157,0.4);
-  }
-  .section-button:hover {
-    background-color: var(--dark-text);
-    transform: scale(1.03);
-    box-shadow: 0 7px 22px rgba(29,53,87,0.6);
-  }
-  #back-button {
-    display: none;
-    margin-bottom: 1.2rem;
-    background-color: var(--dark-text);
-    color: white;
-    border: none;
-    padding: 0.8rem 1.8rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 1.1rem;
-    box-shadow: 0 5px 15px rgba(29,53,87,0.5);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  #back-button:hover {
-    background-color: var(--moderate-blue);
-    transform: scale(1.05);
-  }
-  #file-input {
-    margin-top: 1rem;
-    display: block;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  #accept-btn {
-    display: none;
-    margin-top: 1rem;
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 0.9rem 1.8rem;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow: 0 5px 15px rgba(42,157,143,0.6);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  #accept-btn:hover {
-    background-color: #207761;
-    transform: scale(1.05);
-  }
-  #files-list {
-    margin-top: 1.5rem;
-  }
-  .file-item {
-    border-bottom: 1px solid #ddd;
-    padding: 0.65rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-  .file-item:last-child {
-    border-bottom: none;
-  }
-  .file-info {
-    flex: 1 1 300px;
-    cursor: pointer;
-    color: var(--moderate-blue);
-    transition: color 0.3s ease;
-  }
-  .file-info:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
-  }
-  .file-actions button {
-    margin-left: 0.6rem;
-    background: var(--moderate-blue);
-    border: none;
-    color: white;
-    padding: 0.45rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  .file-actions button:hover {
-    background: var(--accent-color);
-    transform: scale(1.1);
-  }
-  #preview {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    border: 1px solid var(--moderate-blue);
-    border-radius: 15px;
-    background-color: #e0f7fa;
-    min-height: 180px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #preview img {
-    max-width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 3px 8px rgba(42,157,143,0.4);
-  }
-  #preview pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-size: 1rem;
-    font-family: Consolas, monospace;
-    color: #333;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الأقسام - المكتبة</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      direction: rtl;
+      padding: 1.5rem 1rem;
+      background-color: #f0f4f8;
+      max-width: 600px;
+      margin: auto;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    h1 {
+      color: #2a9d8f;
+      font-size: 2rem;
+      margin-bottom: 1.8rem;
+      word-break: break-word;
+    }
+    #addSectionBtn {
+      background-color: #2a9d8f;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      width: 90%;
+      max-width: 320px;
+      margin-bottom: 25px;
+      transition: background-color 0.3s ease;
+    }
+    #addSectionBtn:hover {
+      background-color: #1d5e6b;
+    }
+    #sectionsList {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 40px;
+    }
+    .section-item {
+      background-color: #fff;
+      padding: 16px 20px;
+      border-radius: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .section-item:hover {
+      box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+    }
+    .section-name {
+      font-size: 1.2rem;
+      color: #264653;
+      flex-grow: 1;
+      word-break: break-word;
+      text-align: right;
+      padding-right: 12px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .btn-edit, .btn-delete {
+      background-color: #2a9d8f;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .btn-delete {
+      background-color: #e76f51;
+    }
+    .btn-edit:hover {
+      background-color: #1b5f73;
+    }
+    .btn-delete:hover {
+      background-color: #b54334;
+    }
+    @media (max-width: 400px) {
+      #addSectionBtn {
+        width: 100%;
+        max-width: none;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+      }
+      .section-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .btn-group {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .btn-edit, .btn-delete {
+        width: 48%;
+        font-size: 1.1rem;
+        padding: 10px 0;
+      }
+      .section-name {
+        padding-right: 0;
+        text-align: right;
+        font-size: 1.3rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<h2>📚 أقسام الدروس</h2>
+  <h1>📚 مكتبة الدروس</h1>
 
-<div id="buttons-container">
-  <button class="section-button" data-section="arabic">العربي</button>
-  <button class="section-button" data-section="english">الإنكليزي</button>
-  <button class="section-button" data-section="math">الرياضيات</button>
-</div>
+  <button id="addSectionBtn">➕ إضافة قسم جديد</button>
 
-<button id="back-button">⬅ العودة للأقسام</button>
-
-<div id="section-content" style="display:none;">
-  <h3 id="section-title"></h3>
-  <label for="file-input">رفع ملف (صورة أو نص مثل .pde):</label>
-  <input type="file" id="file-input" accept="image/*,.pdf,.txt,.pde,.js,.html,.css,.json" multiple />
-
-  <button id="accept-btn">✔️ قبول الإضافة</button>
-
-  <div id="files-list">
-    <h4>الملفات المحفوظة:</h4>
-    <div id="files-container"></div>
+  <div id="sectionsList">
+    <!-- تظهر الأقسام هنا -->
   </div>
-  <div id="preview" style="display:none;">
-    <h4>معاينة الملف:</h4>
-    <div id="preview-content"></div>
-  </div>
-</div>
 
-<script>
-  let currentSection = null;
-  let filesToAdd = [];
+  <script>
+    const sectionsList = document.getElementById('sectionsList');
+    const addSectionBtn = document.getElementById('addSectionBtn');
 
-  const buttonsContainer = document.getElementById('buttons-container');
-  const sectionContent = document.getElementById('section-content');
-  const sectionTitle = document.getElementById('section-title');
-  const backButton = document.getElementById('back-button');
-  const fileInput = document.getElementById('file-input');
-  const acceptBtn = document.getElementById('accept-btn');
-  const filesContainer = document.getElementById('files-container');
-  const previewSection = document.getElementById('preview');
-  const previewContent = document.getElementById('preview-content');
+    let sections = JSON.parse(localStorage.getItem('sections') || '[]');
 
-  function getStorageKey(section) {
-    return 'section_files_' + section;
-  }
-
-  function loadFiles(section) {
-    const json = localStorage.getItem(getStorageKey(section));
-    if (!json) return [];
-    try {
-      return JSON.parse(json);
-    } catch {
-      return [];
+    function saveSections() {
+      localStorage.setItem('sections', JSON.stringify(sections));
     }
-  }
 
-  function saveFiles(section, files) {
-    localStorage.setItem(getStorageKey(section), JSON.stringify(files));
-  }
+    function renderSections() {
+      sectionsList.innerHTML = '';
 
-  function displayFiles() {
-    const files = loadFiles(currentSection);
-    filesContainer.innerHTML = '';
-    if (files.length === 0) {
-      filesContainer.innerHTML = '<p style="text-align:center; color:#888;">لا توجد ملفات محفوظة في هذا القسم.</p>';
-      previewSection.style.display = 'none';
-      return;
+      if (sections.length === 0) {
+        sectionsList.innerHTML = '<p style="color:#666; font-size:1.1rem;">لا توجد أقسام مضافة بعد.</p>';
+        return;
+      }
+
+      sections.forEach((section, index) => {
+        const item = document.createElement('div');
+        item.className = 'section-item';
+
+        // عند الضغط على اسم القسم ننتقل إلى صفحة القسم مع حفظ الاسم
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'section-name';
+        nameSpan.textContent = section;
+        nameSpan.onclick = () => {
+          localStorage.setItem('currentSection', section);
+          window.location.href = 'section.html';
+        };
+
+        // أزرار تعديل وحذف
+        const btnGroup = document.createElement('div');
+        btnGroup.className = 'btn-group';
+
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn-edit';
+        editBtn.textContent = '✏️ تعديل الاسم';
+        editBtn.title = 'تعديل اسم القسم';
+        editBtn.onclick = (e) => {
+          e.stopPropagation();
+          const newName = prompt('ادخل اسم القسم الجديد:', section);
+          if (newName !== null) {
+            const trimmed = newName.trim();
+            if (trimmed === '') {
+              alert('الاسم لا يمكن أن يكون فارغاً!');
+              return;
+            }
+            if (sections.includes(trimmed)) {
+              alert('هذا الاسم موجود مسبقاً!');
+              return;
+            }
+            sections[index] = trimmed;
+            saveSections();
+            renderSections();
+          }
+        };
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-delete';
+        delBtn.textContent = '🗑️ حذف القسم';
+        delBtn.title = 'حذف القسم';
+        delBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (confirm(`هل تريد حذف القسم "${section}"؟\n(سوف تحذف جميع الملفات المرتبطة به أيضاً)`)) {
+            sections.splice(index, 1);
+            saveSections();
+            // حذف ملفات القسم من localStorage
+            localStorage.removeItem(`files_${section}`);
+            renderSections();
+          }
+        };
+
+        btnGroup.appendChild(editBtn);
+        btnGroup.appendChild(delBtn);
+
+        item.appendChild(nameSpan);
+        item.appendChild(btnGroup);
+
+        sectionsList.appendChild(item);
+      });
     }
-    files.forEach((file, index) => {
-      const div = document.createElement('div');
-      div.className = 'file-item';
 
-      const nameDiv = document.createElement('div');
-      nameDiv.className = 'file-info';
-      nameDiv.textContent = file.name;
-      nameDiv.title = 'انقر للمعاينة';
-      nameDiv.onclick = () => previewFile(file);
-
-      const actionsDiv = document.createElement('div');
-      actionsDiv.className = 'file-actions';
-
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'حذف';
-      deleteBtn.title = 'حذف الملف';
-      deleteBtn.onclick = (e) => {
-        e.stopPropagation();
-        if(confirm(`هل تريد حذف الملف "${file.name}"؟`)){
-          deleteFile(index);
+    addSectionBtn.onclick = () => {
+      let newSection = prompt('ادخل اسم القسم الجديد:');
+      if (newSection !== null) {
+        newSection = newSection.trim();
+        if (newSection === '') {
+          alert('الاسم لا يمكن أن يكون فارغاً!');
+          return;
         }
-      };
-
-      const downloadBtn = document.createElement('button');
-      downloadBtn.textContent = 'تحميل';
-      downloadBtn.title = 'تحميل الملف';
-      downloadBtn.onclick = (e) => {
-        e.stopPropagation();
-        downloadFile(file);
-      };
-
-      actionsDiv.appendChild(downloadBtn);
-      actionsDiv.appendChild(deleteBtn);
-
-      div.appendChild(nameDiv);
-      div.appendChild(actionsDiv);
-      filesContainer.appendChild(div);
-    });
-  }
-
-  function previewFile(file) {
-  // نحفظ الملف مؤقتًا في localStorage
-  localStorage.setItem('preview_file', JSON.stringify(file));
-  // نفتح صفحة جديدة لعرض الملف
-  window.open('g/عرض.html', '_blank');
-}
-
-
-  function deleteFile(index) {
-    const files = loadFiles(currentSection);
-    files.splice(index,1);
-    saveFiles(currentSection, files);
-    displayFiles();
-    previewSection.style.display = 'none';
-  }
-
-  function downloadFile(file) {
-    let blob;
-    if (file.type.startsWith('image/')) {
-      const arr = file.data.split(',');
-      const mime = arr[0].match(/:(.*?);/)[1];
-      const bstr = atob(arr[1]);
-      let n = bstr.length;
-      const u8arr = new Uint8Array(n);
-      while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
+        if (sections.includes(newSection)) {
+          alert('هذا الاسم موجود مسبقاً!');
+          return;
+        }
+        sections.push(newSection);
+        saveSections();
+        renderSections();
       }
-      blob = new Blob([u8arr], {type:mime});
-    } else {
-      blob = new Blob([file.data], {type:file.type || 'text/plain'});
-    }
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = file.name;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    }, 100);
-  }
+    };
 
-  fileInput.addEventListener('change', (e) => {
-    filesToAdd = Array.from(e.target.files);
-    if(filesToAdd.length > 0){
-      acceptBtn.style.display = 'inline-block';
-    } else {
-      acceptBtn.style.display = 'none';
-    }
-  });
-
-  acceptBtn.addEventListener('click', async () => {
-    if (filesToAdd.length === 0) return alert('لم تختر أي ملفات.');
-
-    const savedFiles = loadFiles(currentSection);
-
-    for(const file of filesToAdd){
-      try {
-        const data = await readFileData(file);
-        savedFiles.push({
-          name: file.name,
-          type: file.type,
-          size: file.size,
-          data: data,
-          lastModified: file.lastModified
-        });
-      } catch {
-        alert(`فشل رفع الملف: ${file.name}`);
-      }
-    }
-    saveFiles(currentSection, savedFiles);
-    displayFiles();
-    filesToAdd = [];
-    acceptBtn.style.display = 'none';
-    fileInput.value = '';
-    alert('تمت إضافة الملفات بنجاح!');
-  });
-
-  function readFileData(file){
-    return new Promise((resolve,reject)=>{
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject();
-      if(file.type.startsWith('image/')){
-        reader.readAsDataURL(file);
-      } else {
-        reader.readAsText(file);
-      }
-    });
-  }
-
-  buttonsContainer.addEventListener('click', (e) => {
-    const btn = e.target.closest('.section-button');
-    if(!btn) return;
-
-    currentSection = btn.getAttribute('data-section');
-    sectionTitle.textContent = 'قسم: ' + btn.textContent;
-    buttonsContainer.style.display = 'none';
-    sectionContent.style.display = 'block';
-    backButton.style.display = 'inline-block';
-    previewSection.style.display = 'none';
-
-    displayFiles();
-  });
-
-  backButton.addEventListener('click', () => {
-    currentSection = null;
-    buttonsContainer.style.display = 'block';
-    sectionContent.style.display = 'none';
-    backButton.style.display = 'none';
-    previewSection.style.display = 'none';
-    filesToAdd = [];
-    acceptBtn.style.display = 'none';
-    fileInput.value = '';
-  });
-</script>
+    renderSections();
+  </script>
 
 </body>
 </html>
-عرض
