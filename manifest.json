@@ -1,13 +1,19 @@
 {
-  "name": "موقعي التعليمي",
-  "short_name": "التعليمي",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#457b9d",
-  "theme_color": "#457b9d",
+  "name": "التطبيق التعليمي",
+  "short_name": "تعليمي",
   "description": "تطبيق تعليمي يعمل بدون إنترنت",
-  "orientation": "portrait",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#457b9d",
+  "background_color": "#f2f2f2",
   "icons": [
+    {
+      "src": "icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
     {
       "src": "icon-192.png",
       "sizes": "192x192",
